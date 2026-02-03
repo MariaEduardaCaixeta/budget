@@ -1,7 +1,7 @@
 import Svg, { Path } from "react-native-svg";
 import { SvgIconProps } from "./Icon.types";
 
-export function MinusIcon({ size, color }: SvgIconProps) {
+export function MinusIcon({ iconSize: size, iconColor: color }: SvgIconProps) {
     return (
         <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
             <Path

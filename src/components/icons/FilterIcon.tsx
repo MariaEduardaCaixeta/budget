@@ -1,7 +1,7 @@
 import Svg, { Path } from "react-native-svg";
 import { SvgIconProps } from "./Icon.types";
 
-export function FilterIcon({ size, color }: SvgIconProps) {
+export function FilterIcon({ iconSize: size, iconColor: color }: SvgIconProps) {
     return (
         <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
             <Path d="M21.25 12H8.89464" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" />

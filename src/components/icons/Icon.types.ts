@@ -18,10 +18,10 @@ export type IconName =
     | "trash";
 
 export type SvgIconProps = {
-    size?: number;
-    color?: string;
+    iconSize?: number;
+    iconColor?: string;
 }
 
 export type IconProps = SvgIconProps & {
-    name: IconName;
+    iconName: IconName;
 }

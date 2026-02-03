@@ -21,7 +21,7 @@ import { TrashIcon } from "./TrashIcon";
 
 type SvgIconComponent = ComponentType<SvgIconProps>;
 
-const icons: Record<IconProps["name"], SvgIconComponent> = {
+const icons: Record<IconProps["iconName"], SvgIconComponent> = {
     calendar: CalendarIcon,
     card: CardIcon,
     check: CheckIcon,
@@ -41,7 +41,7 @@ const icons: Record<IconProps["name"], SvgIconComponent> = {
     trash: TrashIcon
 };
 
-export function Icon({ name, size=24, color='#000' }: IconProps) {
+export function Icon({ iconName: name, iconSize: size=24, iconColor: color='#FFF' }: IconProps) {
     const IconComponent = icons[name];
-    return <IconComponent size={size} color={color} />;
+    return <IconComponent iconSize={size} iconColor={color} />;
 }

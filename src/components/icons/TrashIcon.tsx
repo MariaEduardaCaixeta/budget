@@ -1,7 +1,7 @@
 import Svg, { Path } from "react-native-svg";
 import { SvgIconProps } from "./Icon.types";
 
-export function TrashIcon({ size, color }: SvgIconProps) {
+export function TrashIcon({ iconSize: size, iconColor: color }: SvgIconProps) {
     return (
         <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
             <Path d="M5.47058 6.01471V18.5294C5.47058 19.251 5.75721 19.943 6.26742 20.4532C6.77763 20.9634 7.46962 21.25 8.19117 21.25H15.8088C16.5304 21.25 17.2224 20.9634 17.7326 20.4532C18.2428 19.943 18.5294 19.251 18.5294 18.5294V6.01471" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

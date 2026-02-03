@@ -1,4 +1,6 @@
+import { Button } from '@/components/Button';
 import { Icon } from '@/components/icons';
+import { colors } from '@/theme/colors';
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
@@ -18,7 +20,8 @@ export default function App() {
     <View style={styles.container}>
       <Text>Open up App.js to start teste on your app!</Text>
       <StatusBar style="auto" />
-      <Icon name="check" size={50} />
+      <Icon iconName="check" iconSize={50} />
+      <Button label="Press me" iconName="plus" labelColor={colors.purple.base} iconColor='#000' />
     </View>
   );
 }
