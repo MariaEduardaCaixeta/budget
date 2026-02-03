@@ -12,8 +12,10 @@
     "expo": "~54.0.33",
     "expo-font": "~14.0.11",
     "expo-status-bar": "~3.0.9",
+    "mage-icons-react": "^0.7.0-beta",
     "react": "19.1.0",
-    "react-native": "0.81.5"
+    "react-native": "0.81.5",
+    "react-native-svg": "15.12.1"
   },
   "private": true,
   "devDependencies": {
