@@ -4,14 +4,18 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
+        borderWidth: 1,
+        borderColor: colors.gray[300],
+        borderRadius: 999,
+        paddingVertical: spacing.sm,
+        paddingHorizontal: spacing.md,
         flexDirection: 'row',
         alignItems: 'center',
-        padding: spacing.sm,
-        borderRadius: 999,
         gap: spacing.xs,
+        backgroundColor: colors.gray[100]
     },
-    outlineButton : {
-        borderWidth: 1,
-        borderColor: colors.gray[300]
+    input: {
+        flex: 1,
+        color: colors.gray[500]
     }
 });
