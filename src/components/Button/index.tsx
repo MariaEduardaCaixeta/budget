@@ -4,7 +4,7 @@ import { styles } from "./styles";
 import { typography } from "@/theme/typography";
 
 type Props = PressableProps & Partial<IconProps> & {
-    label: string;
+    label?: string;
     backgroundColor?: string;
     labelColor?: string;
 }
@@ -30,7 +30,7 @@ export function Button({ label, backgroundColor, labelColor, ...rest }: Props) {
                         />
                     )
                 }
-                <Text style={[typography.titleSm as TextStyle, { color: labelColor || '#FFF' }]}>{label}</Text>
+                {label && <Text style={[typography.titleSm as TextStyle, { color: labelColor || '#FFF' }]}>{label}</Text>}
             </View>
         </Pressable>
     )

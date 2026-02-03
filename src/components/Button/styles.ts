@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
         padding: spacing.sm,
         borderRadius: 999,
         gap: spacing.xs,
+        backgroundColor: colors.gray[100]
     },
     outlineButton : {
         borderWidth: 1,

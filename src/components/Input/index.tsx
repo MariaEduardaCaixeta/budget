@@ -2,12 +2,13 @@ import { TextInput, TextInputProps, TextStyle, View } from 'react-native';
 import { Icon, IconProps } from '../icons';
 import { styles } from './styles';
 import { typography } from '@/theme/typography';
+import { colors } from '@/theme/colors';
 
 type Props = TextInputProps & Partial<IconProps>;
 
-export function Input(props: Props) {
+export function Input({ style, ...props }: Props) {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
             {
                 props.iconName && (
                     <Icon
@@ -20,7 +21,7 @@ export function Input(props: Props) {
             <TextInput
                 style={[typography.textMd as TextStyle, styles.input]}
                 {...props}
-                placeholderTextColor={'#000'}
+                placeholderTextColor={colors.gray[500]}
             />
         </View>
     )

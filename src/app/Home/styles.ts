@@ -22,5 +22,10 @@ export const styles = StyleSheet.create({
     },
     subHeaderText: {
         color: colors.gray[500]
+    },
+    searchContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: spacing.sm,
     }
 });

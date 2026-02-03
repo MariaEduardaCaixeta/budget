@@ -21,7 +21,11 @@ export function Home() {
                     <Button label="Novo" iconName="plus" backgroundColor={colors.purple.base} onPress={() => console.log("Button Pressed")} />
 
                 </View>
-                <Input iconName="search" iconColor={colors.gray[600]} iconSize={20}/>
+
+                <View style={styles.searchContainer}>
+                    <Input  style={{ flex: 1 }} iconName="search" iconColor={colors.gray[600]} iconSize={20} placeholder="Título ou cliente"/>
+                    <Button iconName="filter" onPress={() => console.log("Buscar Pressed")} iconColor={colors.purple.base} />
+                </View>               
             </View>
         </SafeAreaView>
     )
