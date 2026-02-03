@@ -5,16 +5,25 @@ import { styles } from "./styles";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { Input } from "@/components/Input";
-import { StatusTag } from "@/components/StatusTag";
 import { BudgetStatus } from "@/enums/BudgetStatus";
 import { BudgetCard } from "@/components/BudgetCard";
+import { AppBottomSheet } from "@/components/AppBottomSheet";
+import { useMemo, useRef } from "react";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 export function Home() {
+    const sheetRef = useRef<BottomSheet>(null);
+    const snapPoints = useMemo(() => ['50%'], []);
+
+    const openFilterSheet = () => {
+        sheetRef.current?.expand();
+    }
+
     return (
         <SafeAreaView
             style={{ flex: 1 }}
         >
-            <View  style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.headerContainer}>
                     <View style={styles.headerTextContainer}>
                         <Text style={[typography.titleLg as TextStyle, styles.headerText]}>Orçamentos</Text>
@@ -24,16 +33,20 @@ export function Home() {
                 </View>
 
                 <View style={styles.searchContainer}>
-                    <Input  style={{ flex: 1 }} iconName="search" iconColor={colors.gray[600]} iconSize={20} placeholder="Título ou cliente"/>
-                    <Button iconName="filter" onPress={() => console.log("Buscar Pressed")} iconColor={colors.purple.base} />
-                </View>  
+                    <Input style={{ flex: 1 }} iconName="search" iconColor={colors.gray[600]} iconSize={20} placeholder="Título ou cliente" />
+                    <Button iconName="filter" onPress={openFilterSheet} iconColor={colors.purple.base} />
+                </View>
 
-                <BudgetCard 
+                <BudgetCard
                     status={BudgetStatus.DRAFT}
                     budgetTitle="Desenvolvimento de aplicativo de loja online"
                     clientName="João da Silva"
                     amount={25000.789}
                 />
+
+                <AppBottomSheet sheetRef={sheetRef} snapPoints={snapPoints} title="Filtros">
+                    <Text>Conteúdo do Bottom Sheet de Filtros</Text>
+                </AppBottomSheet>
             </View>
         </SafeAreaView>
     )
