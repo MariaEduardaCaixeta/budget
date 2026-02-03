@@ -10,10 +10,11 @@ import { BudgetCard } from "@/components/BudgetCard";
 import { AppBottomSheet } from "@/components/AppBottomSheet";
 import { useMemo, useRef } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { Filter } from "@/components/Filter";
 
 export function Home() {
     const sheetRef = useRef<BottomSheet>(null);
-    const snapPoints = useMemo(() => ['50%'], []);
+    const snapPoints = useMemo(() => ['70%'], []);
 
     const openFilterSheet = () => {
         sheetRef.current?.expand();
@@ -45,7 +46,7 @@ export function Home() {
                 />
 
                 <AppBottomSheet sheetRef={sheetRef} snapPoints={snapPoints} title="Filtros">
-                    <Text>Conteúdo do Bottom Sheet de Filtros</Text>
+                    <Filter />
                 </AppBottomSheet>
             </View>
         </SafeAreaView>

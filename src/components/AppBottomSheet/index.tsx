@@ -1,4 +1,4 @@
-import BottomSheet, { BottomSheetBackdrop, BottomSheetProps, BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetProps, BottomSheetScrollView, BottomSheetView } from "@gorhom/bottom-sheet";
 import { Pressable, Text, TextStyle, View } from "react-native";
 import { styles } from "./styles";
 import { typography } from "@/theme/typography";
@@ -27,17 +27,17 @@ export function AppBottomSheet({ sheetRef, children, title, ...props }: Props) {
                 />
             )}
         >
-            <BottomSheetView style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={[typography.titleSm as TextStyle, styles.title]}>{title}</Text>
-                    <Pressable onPress={() => sheetRef && (sheetRef as React.RefObject<BottomSheet>).current?.close()} style={({ pressed }) => [
-                        pressed && { opacity: 0.5 },
-                    ]}>
-                        <Icon iconName="close" iconSize={24} iconColor={colors.gray[600]} />
-                    </Pressable>
-                </View>
+            <View style={[styles.container, styles.header]}>
+                <Text style={[typography.titleSm as TextStyle, styles.title]}>{title}</Text>
+                <Pressable onPress={() => sheetRef && (sheetRef as React.RefObject<BottomSheet>).current?.close()} style={({ pressed }) => [
+                    pressed && { opacity: 0.5 },
+                ]}>
+                    <Icon iconName="close" iconSize={24} iconColor={colors.gray[600]} />
+                </Pressable>
+            </View>
+            <BottomSheetScrollView contentContainerStyle={styles.container}>
                 {children}
-            </BottomSheetView>
+            </BottomSheetScrollView>
         </BottomSheet>
     )
 }
