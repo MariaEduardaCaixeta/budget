@@ -8,7 +8,8 @@ import { formatCurrency } from "@/utils/formatters";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import CurrencyInput from "react-native-currency-input";
 
-type AddServiceFormData = {
+export type ServiceData = {
+    id: string;
     name: string;
     description: string;
     amount: number;
@@ -16,7 +17,7 @@ type AddServiceFormData = {
 }
 
 type AddServiceProps = {
-    onSubmit?: (data: AddServiceFormData) => void;
+    onSubmit?: (data: ServiceData) => void;
 }
 
 export type AddServiceRef = {
@@ -30,8 +31,17 @@ export const AddService = forwardRef<AddServiceRef, AddServiceProps>(({ onSubmit
     const [quantity, setQuantity] = useState(1);
 
     const handleSubmit = () => {
-        onSubmit?.({ name, description, amount, quantity });
+        resetForm();
+        const id = Math.random().toString(36).substring(2, 9);
+        onSubmit?.({ id, name, description, amount, quantity });
     };
+
+    const resetForm = () => {
+        setName("");
+        setDescription("");
+        setAmount(0);
+        setQuantity(1);
+    }
 
     useImperativeHandle(ref, () => ({
         submit: handleSubmit,

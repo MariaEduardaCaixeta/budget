@@ -5,15 +5,9 @@ import { Money } from "@/components/MoneyText";
 import { moneyStyles } from "@/components/MoneyText/styles";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
+import { ServiceData } from "../AddService";
 
-export type ServiceRowProps = {
-    serviceName: string;
-    serviceDescription: string;
-    amount: number;
-    quantity: number;
-}
-
-export function ServiceRow({ serviceName, serviceDescription, amount, quantity }: ServiceRowProps) {
+export function ServiceRow(data: ServiceData) {
     return (
         <View style={styles.container}>
             {/* LEFT */}
@@ -23,7 +17,7 @@ export function ServiceRow({ serviceName, serviceDescription, amount, quantity }
                     ellipsizeMode="tail"
                     style={styles.title}
                 >
-                    {serviceName}
+                    {data.name}
                 </Text>
 
                 <Text
@@ -31,15 +25,15 @@ export function ServiceRow({ serviceName, serviceDescription, amount, quantity }
                     ellipsizeMode="tail"
                     style={styles.description}
                 >
-                    {serviceDescription}
+                    {data.description}
                 </Text>
             </View>
 
             {/* RIGHT */}
             <View style={styles.right}>
-                <Money amount={amount} amountStyle={[moneyStyles.base, typography.titleMd]}/>
+                <Money amount={data.amount} amountStyle={[moneyStyles.base, typography.titleMd]}/>
 
-                <Text style={styles.qty}>Qt: {quantity}</Text>
+                <Text style={styles.qty}>Qt: {data.quantity}</Text>
             </View>
 
             {/* ICON */}

@@ -13,12 +13,10 @@ import { Services } from "./components/Services";
 import { Investment } from "./components/Investment";
 import { useMemo, useRef, useState } from "react";
 import { BudgetStatus } from "@/enums/BudgetStatus";
-import { ServiceRowProps } from "./components/Services/ServiceRow";
 import { Footer } from "@/components/Footer";
 import { AppBottomSheet } from "@/components/AppBottomSheet";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { Filter } from "react-native-svg";
-import { AddService, AddServiceRef } from "./components/Services/AddService";
+import { AddService, ServiceData, AddServiceRef } from "./components/Services/AddService";
 
 const MAX = 100;
 const MIN = 0;
@@ -31,10 +29,10 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     const [title, setTitle] = useState('')
     const [client, setClient] = useState('')
     const [status, setStatus] = useState(BudgetStatus.DRAFT)
-    const [services, setServices] = useState<ServiceRowProps[]>([])
+    const [services, setServices] = useState<ServiceData[]>([])
     const [discount, setDiscount] = useState('')
-    const [subtotal, setSubtotal] = useState(100)
-    const [newService, setNewService] = useState<ServiceRowProps | null>(null);
+    const [subtotal, setSubtotal] = useState(0)
+    const [totalItems, setTotalItems] = useState(0)
 
     const handleDiscountChange = (text: string) => {
         const cleaned = text.replace(/[^0-9]/g, "");
@@ -48,17 +46,10 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
         setDiscount(cleaned);
     };
 
-    const handleNewService = (service: ServiceRowProps | null) => {
-        if (service) {
-            console.log('New service added:', service);
-            // setServices((prevServices) => [...prevServices, service]);
-        }
-    }
-
-    const handleAddService = (serviceData: { name: string; description: string; amount: number; quantity: number }) => {
-        console.log('Service submitted:', serviceData);
-        // Aqui você pode adicionar a lógica para salvar o serviço
-        // setServices((prevServices) => [...prevServices, serviceData]);
+    const handleAddService = (serviceData: ServiceData) => {
+        setServices((prevServices) => [...prevServices, serviceData]);
+        setTotalItems((prevTotal) => prevTotal + serviceData.quantity);
+        setSubtotal((prevSubtotal) => prevSubtotal + serviceData.amount * serviceData.quantity);
         closeServiceSheet();
     }
 
@@ -118,7 +109,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                             cardContent={
                                 <Investment
                                     subtotal={subtotal}
-                                    totalItems={8}
+                                    totalItems={totalItems}
                                     discount={discount}
                                     onChangeText={handleDiscountChange}
                                 />

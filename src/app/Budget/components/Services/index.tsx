@@ -1,11 +1,12 @@
 import { View } from "react-native"
-import { ServiceRow, ServiceRowProps } from "./ServiceRow"
+import { ServiceRow } from "./ServiceRow"
 import { colors } from "@/theme/colors"
 import { Button } from "@/components/Button"
 import { styles } from "./styles"
+import { ServiceData } from "./AddService"
 
 type ServicesProps = {
-    services?: ServiceRowProps[];
+    services?: ServiceData[];
     onAddService?: () => void;
 }
 
@@ -15,10 +16,8 @@ export function Services({ services, onAddService }: ServicesProps) {
             {
                 services?.map((service) => (
                     <ServiceRow
-                        serviceName={service.serviceName}
-                        serviceDescription={service.serviceDescription}
-                        amount={service.amount}
-                        quantity={service.quantity}
+                        key={service.id}
+                        {...service}
                     />
                 ))
             }
