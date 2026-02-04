@@ -10,5 +10,5 @@ export const fonts = {
         semiBold: '600',
         medium: '500',
         regular: '400'
-    }
+    } as const
 }

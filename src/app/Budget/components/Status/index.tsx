@@ -1,7 +1,7 @@
 import { RadioGroup } from "@/components/RadioGroup";
 import { StatusTag } from "@/components/StatusTag";
 import { BudgetStatus, budgetStatusConfig, BudgetStatusConfig } from "@/enums/BudgetStatus";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { styles } from "./styles";
 
 
