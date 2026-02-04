@@ -12,8 +12,9 @@ import { useMemo, useRef } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Filter } from "@/components/Filter";
 import { Footer } from "@/components/Footer";
+import { StackRoutesProps } from "@/routes/StackRoutes";
 
-export function Home() {
+export function Home({ navigation }: StackRoutesProps<'home'>) {
     const sheetRef = useRef<BottomSheet>(null);
     const snapPoints = useMemo(() => ['70%'], []);
 
@@ -45,7 +46,7 @@ export function Home() {
                         <Text style={[typography.titleLg as TextStyle, styles.headerText]}>Orçamentos</Text>
                         <Text style={[typography.textSm as TextStyle, styles.subHeaderText]}>Você tem 1 item em rascunho</Text>
                     </View>
-                    <Button label="Novo" iconName="plus" backgroundColor={colors.purple.base} onPress={() => console.log("Button Pressed")} />
+                    <Button label="Novo" iconName="plus" backgroundColor={colors.purple.base} onPress={() => navigation.navigate('budget')} />
                 </View>
 
                 <View style={styles.searchContainer}>

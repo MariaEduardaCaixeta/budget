@@ -1,4 +1,4 @@
-import { Home } from '@/app/Home';
+import { Routes } from '@/routes';
 import { useFonts } from 'expo-font';
 import React from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -17,7 +17,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Home />
+        <Routes />
       </GestureHandlerRootView>
     </SafeAreaProvider>
   );
