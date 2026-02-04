@@ -11,6 +11,7 @@ import { AppBottomSheet } from "@/components/AppBottomSheet";
 import { useMemo, useRef } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Filter } from "@/components/Filter";
+import { Footer } from "@/components/Footer";
 
 export function Home() {
     const sheetRef = useRef<BottomSheet>(null);
@@ -18,6 +19,20 @@ export function Home() {
 
     const openFilterSheet = () => {
         sheetRef.current?.expand();
+    }
+
+    const closeFilterSheet = () => {
+        sheetRef.current?.close();
+    }
+
+    const applyFilters = () => {
+        // Lógica para aplicar os filtros
+        closeFilterSheet();
+    }
+
+    const resetFilters = () => {
+        // Lógica para resetar os filtros
+        closeFilterSheet();
     }
 
     return (
@@ -45,9 +60,18 @@ export function Home() {
                     amount={25000.789}
                 />
 
-                <AppBottomSheet sheetRef={sheetRef} snapPoints={snapPoints} title="Filtros">
-                    <Filter />
-                </AppBottomSheet>
+                <AppBottomSheet
+                    sheetRef={sheetRef}
+                    snapPoints={snapPoints}
+                    title="Filtros"
+                    content={<Filter />}
+                    footer={
+                        <Footer
+                            primary={{ label: "Aplicar", iconName: "check", backgroundColor: colors.purple.base, iconSize: 16, onPress: applyFilters }}
+                            secondary={{ label: "Resetar filtros", labelColor: colors.purple.base, onPress: resetFilters }}
+                        />
+                    }
+                />
             </View>
         </SafeAreaView>
     )

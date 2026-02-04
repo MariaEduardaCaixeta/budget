@@ -3,13 +3,13 @@ import { Icon, IconProps } from "../icons";
 import { styles } from "./styles";
 import { typography } from "@/theme/typography";
 
-type Props = PressableProps & Partial<IconProps> & {
+export type ButtonProps = PressableProps & Partial<IconProps> & {
     label?: string;
     backgroundColor?: string;
     labelColor?: string;
 }
 
-export function Button({ label, backgroundColor, labelColor, ...rest }: Props) {
+export function Button({ label, backgroundColor, labelColor, ...rest }: ButtonProps) {
     return (
         <Pressable
             {...rest}

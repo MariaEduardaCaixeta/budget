@@ -16,5 +16,10 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: colors.gray[200],
         paddingBottom: spacing.xl
+    },
+    footer: {
+        borderTopWidth: 1,
+        borderTopColor: colors.gray[200],
+        padding: spacing.lg,
     }
 })

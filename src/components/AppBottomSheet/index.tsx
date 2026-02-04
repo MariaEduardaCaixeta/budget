@@ -5,13 +5,14 @@ import { typography } from "@/theme/typography";
 import { Icon } from "../icons";
 import { colors } from "@/theme/colors";
 
-type Props = BottomSheetProps & {
+type Props = Partial<BottomSheetProps> & {
     sheetRef: React.Ref<BottomSheet>;
     title: string;
-    children: React.ReactNode;
+    content: React.ReactNode;
+    footer: React.ReactNode;
 }
 
-export function AppBottomSheet({ sheetRef, children, title, ...props }: Props) {
+export function AppBottomSheet({ sheetRef, content, title, footer, ...props }: Props) {
     return (
         <BottomSheet
             ref={sheetRef}
@@ -36,8 +37,11 @@ export function AppBottomSheet({ sheetRef, children, title, ...props }: Props) {
                 </Pressable>
             </View>
             <BottomSheetScrollView contentContainerStyle={styles.container}>
-                {children}
+                {content}
             </BottomSheetScrollView>
+            <View style={styles.footer}>
+                {footer}
+            </View>
         </BottomSheet>
     )
 }
