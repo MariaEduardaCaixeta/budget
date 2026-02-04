@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
 import { GeneralInfo } from "./components/GerneralInfo";
 import { Status } from "./components/Status";
+import { Services } from "./components/Services";
 
 export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     return (
@@ -37,6 +38,16 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                         iconName="tag"
                         iconColor={colors.purple.base}
                     />
+    
+                    <BudgetDetailsCard
+                        cardLabel="Serviços inclusos"
+                        cardContent={
+                            <Services />
+                        }
+                        iconName="note"
+                        iconColor={colors.purple.base}
+                    />
+
                 </View>
             </View>
 
