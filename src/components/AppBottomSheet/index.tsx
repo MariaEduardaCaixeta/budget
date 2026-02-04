@@ -29,7 +29,7 @@ export function AppBottomSheet({ sheetRef, content, title, footer, ...props }: P
             )}
         >
             <View style={[styles.container, styles.header]}>
-                <Text style={[typography.titleSm as TextStyle, styles.title]}>{title}</Text>
+                <Text style={[typography.titleSm , styles.title]}>{title}</Text>
                 <Pressable onPress={() => sheetRef && (sheetRef as React.RefObject<BottomSheet>).current?.close()} style={({ pressed }) => [
                     pressed && { opacity: 0.5 },
                 ]}>

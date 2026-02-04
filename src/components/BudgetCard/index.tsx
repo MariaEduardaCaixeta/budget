@@ -16,14 +16,14 @@ export function BudgetCard({ status, budgetTitle, clientName, amount }: Props) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={[typography.titleMd as TextStyle, styles.title]}>{budgetTitle}</Text>
+                <Text style={[typography.titleMd , styles.title]}>{budgetTitle}</Text>
                 <StatusTag status={status}/>
             </View>
 
             <View style={styles.subHeaderContainer}>
-                <Text style={[typography.textSm as TextStyle, styles.subHeaderTitle]}>{clientName}</Text>
-                <Text style={[typography.titleMd as TextStyle, styles.price]}>
-                    <Text style={typography.textXs as TextStyle}>R$ </Text>
+                <Text style={[typography.textSm , styles.subHeaderTitle]}>{clientName}</Text>
+                <Text style={[typography.titleMd , styles.price]}>
+                    <Text style={typography.textXs }>R$ </Text>
                     {formatNumber(amount)}
                 </Text>
             </View>

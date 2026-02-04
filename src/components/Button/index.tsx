@@ -30,7 +30,7 @@ export function Button({ label, backgroundColor, labelColor, ...rest }: ButtonPr
                         />
                     )
                 }
-                {label && <Text style={[typography.titleSm as TextStyle, { color: labelColor || '#FFF' }]}>{label}</Text>}
+                {label && <Text style={[typography.titleSm , { color: labelColor || '#FFF' }]}>{label}</Text>}
             </View>
         </Pressable>
     )

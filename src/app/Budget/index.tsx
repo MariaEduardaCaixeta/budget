@@ -18,7 +18,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
             <View style={{ flex: 1 }}>
                 <Header>
                     <Button backgroundColor="transparent" iconName="chevronLeft" iconColor={colors.gray[600]} />
-                    <Text style={[typography.titleSm as TextStyle]}>Orçamento {route.params?.id}</Text>
+                    <Text style={[typography.titleSm ]}>Orçamento {route.params?.id}</Text>
                 </Header>
 
                 <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollViewContent}>

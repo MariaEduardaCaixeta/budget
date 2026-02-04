@@ -36,7 +36,7 @@ export function RadioGroup<T extends string>({ options, selectedValue, columns =
                 </View>
 
                 {typeof opt.label === "string" || typeof opt.label === "number" ? (
-                    <Text style={[typography.textMd as TextStyle, styles.optionLabel]}>{opt.label}</Text>
+                    <Text style={[typography.textMd , styles.optionLabel]}>{opt.label}</Text>
                 ) : (
                     <View>{opt.label}</View>
                 )}

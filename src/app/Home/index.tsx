@@ -43,8 +43,8 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
                     <View style={styles.headerTextContainer}>
-                        <Text style={[typography.titleLg as TextStyle, styles.headerText]}>Orçamentos</Text>
-                        <Text style={[typography.textSm as TextStyle, styles.subHeaderText]}>Você tem 1 item em rascunho</Text>
+                        <Text style={[typography.titleLg, styles.headerText]}>Orçamentos</Text>
+                        <Text style={[typography.textSm, styles.subHeaderText]}>Você tem 1 item em rascunho</Text>
                     </View>
                     <Button label="Novo" iconName="plus" backgroundColor={colors.purple.base} onPress={() => navigation.navigate('budget')} />
                 </View>

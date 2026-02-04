@@ -19,7 +19,7 @@ export function Input({ style, ...props }: Props) {
                 )
             }
             <TextInput
-                style={[typography.textMd as TextStyle, styles.input]}
+                style={[typography.textMd , styles.input]}
                 {...props}
                 placeholderTextColor={colors.gray[500]}
             />

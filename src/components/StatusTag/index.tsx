@@ -12,7 +12,7 @@ export function StatusTag({ status }: Props) {
     return (
         <View style={[styles.container, { backgroundColor: budgetConfig.backgroundColor }]}>
             <View style={[styles.circle, { backgroundColor: budgetConfig.circleColor }]}/>
-            <Text style={[typography.titleXs as TextStyle, { color: budgetConfig.textColor }]}>{budgetConfig.label}</Text>
+            <Text style={[typography.titleXs , { color: budgetConfig.textColor }]}>{budgetConfig.label}</Text>
         </View>   
     )
 }

@@ -19,7 +19,7 @@ export function BudgetDetailsCard({ cardContent, cardLabel, customCardLabel, ...
                     cardLabel &&
                     <>
                         <Icon iconSize={16} {...iconProps} />
-                        <Text style={[typography.textXs as TextStyle, styles.labelText]}>{cardLabel}</Text>
+                        <Text style={[typography.textXs , styles.labelText]}>{cardLabel}</Text>
                     </>
                 }
 
