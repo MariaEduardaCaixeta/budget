@@ -1,9 +1,7 @@
 import { Icon, IconProps } from "@/components/icons";
-import { Text, TextStyle, View } from "react-native";
+import { Text, View } from "react-native";
 import { styles } from "./styles";
-import { typography } from "@/theme/typography";
-import { colors } from "@/theme/colors";
-import { formatNumber } from "@/utils/formatters";
+import { Money } from "@/components/MoneyText";
 
 type ServiceRowProps = IconProps & {
     serviceName: string;
@@ -20,7 +18,7 @@ export function ServiceRow({ serviceName, serviceDescription, amount, quantity, 
                 <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={[typography.titleSm as TextStyle, styles.title]}
+                    style={styles.title}
                 >
                     {serviceName}
                 </Text>
@@ -28,7 +26,7 @@ export function ServiceRow({ serviceName, serviceDescription, amount, quantity, 
                 <Text
                     numberOfLines={1}
                     ellipsizeMode="tail"
-                    style={[typography.textXs as TextStyle, styles.description]}
+                    style={styles.description}
                 >
                     {serviceDescription}
                 </Text>
@@ -36,12 +34,9 @@ export function ServiceRow({ serviceName, serviceDescription, amount, quantity, 
 
             {/* RIGHT */}
             <View style={styles.right}>
-                <Text>
-                    <Text style={[typography.textXs as TextStyle, styles.currency]}>R$ </Text>
-                    <Text style={[typography.titleMd as TextStyle, styles.amount]}>{formatNumber(amount)}</Text>
-                </Text>
+                <Money amount={amount} />
 
-                <Text style={[typography.textXs as TextStyle, styles.qty]}>Qt: {quantity}</Text>
+                <Text style={styles.qty}>Qt: {quantity}</Text>
             </View>
 
             {/* ICON */}

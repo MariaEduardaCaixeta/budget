@@ -1,5 +1,6 @@
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
+import { typography } from "@/theme/typography";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -13,24 +14,21 @@ export const styles = StyleSheet.create({
         paddingRight: spacing.md,
     },
     title: {
-        color: colors.gray[700]
+        ...typography.titleSm,
+        color: colors.gray[700],
     },
     description: {
+        ...typography.textXs,
         color: colors.gray[600],
-        marginTop: spacing.xxxs
+        marginTop: spacing.xxxs,
     },
     right: {
         alignItems: "flex-end",
         marginRight: spacing.md,
     },
-    currency: { 
-        color: colors.gray[700] 
-    },
-    amount: { 
-        color: colors.gray[700] 
-    },
-    qty: { 
-        color: colors.gray[600], 
-        marginTop: spacing.xxxs 
+    qty: {
+        ...typography.textXs,
+        color: colors.gray[600],
+        marginTop: spacing.xxxs,
     },
 });
