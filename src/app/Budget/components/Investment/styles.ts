@@ -19,12 +19,22 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: spacing.sm,
     },
+    discountInputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: colors.gray[100],
+        borderWidth: 1,
+        borderColor: colors.gray[300],
+        borderRadius: 999,
+        paddingVertical: spacing.xxxs,
+        paddingHorizontal: spacing.xs,
+        marginLeft: spacing.xs,
+    },
     subtotalRight: {
         flexDirection: "row",
         alignItems: "center",
         marginBottom: spacing.sm,
     },
-
     total: {
         flexDirection: "row",
         borderTopColor: colors.gray[200],

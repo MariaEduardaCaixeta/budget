@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { StackRoutesProps } from "@/routes/StackRoutes";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
-import { ScrollView, Text, TextStyle, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
 import { GeneralInfo } from "./components/GerneralInfo";
@@ -18,7 +18,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
             <View style={{ flex: 1 }}>
                 <Header>
                     <Button backgroundColor="transparent" iconName="chevronLeft" iconColor={colors.gray[600]} />
-                    <Text style={[typography.titleSm ]}>Orçamento {route.params?.id}</Text>
+                    <Text style={[typography.titleSm]}>Orçamento {route.params?.id}</Text>
                 </Header>
 
                 <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollViewContent}>
@@ -53,7 +53,10 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                         <BudgetDetailsCard
                             cardLabel="Investimento"
                             cardContent={
-                                <Investment />
+                                <Investment
+                                    subtotal={3847.5}
+                                    totalItems={8}
+                                />
                             }
                             iconName="card"
                             iconColor={colors.purple.base}
