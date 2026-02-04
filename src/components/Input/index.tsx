@@ -4,9 +4,9 @@ import { styles } from './styles';
 import { typography } from '@/theme/typography';
 import { colors } from '@/theme/colors';
 
-type Props = TextInputProps & Partial<IconProps>;
+export type InputProps = TextInputProps & Partial<IconProps>;
 
-export function Input({ style, ...props }: Props) {
+export function Input({ style, ...props }: InputProps) {
     return (
         <View style={[styles.container, style]}>
             {

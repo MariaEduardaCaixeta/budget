@@ -1,6 +1,7 @@
 import { formatNumber } from "@/utils/formatters";
 import { moneyStyles } from "./styles";
 import { Text } from "react-native";
+import { typography } from "@/theme/typography";
 
 type MoneyVariant = "default" | "danger";
 
@@ -25,7 +26,7 @@ export function Money({
         <Text style={[colorStyle, strike && moneyStyles.strike]}>
             {!!prefix && <Text style={[moneyStyles.currency, colorStyle]}>{prefix}</Text>}
             <Text style={[moneyStyles.currency, colorStyle]}>{currency} </Text>
-            <Text style={[moneyStyles.amountSm, amountStyle]}>{formatNumber(amount)}</Text>
+            <Text style={[typography.textSm, amountStyle]}>{formatNumber(amount)}</Text>
         </Text>
     );
 }

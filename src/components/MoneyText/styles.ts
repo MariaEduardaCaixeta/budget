@@ -9,12 +9,6 @@ export const moneyStyles = StyleSheet.create({
     currency: {
         ...typography.textXs,
     },
-    amountSm: {
-        ...typography.textSm,
-    },
-    amountLg: {
-        ...typography.titleLg,
-    },
     danger: {
         color: colors.danger.base,
     },

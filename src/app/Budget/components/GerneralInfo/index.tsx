@@ -1,13 +1,17 @@
-import { Input } from "@/components/Input";
+import { Input, InputProps } from "@/components/Input";
 import { View } from "react-native";
 import { styles } from "./styles";
 
+type GeneralInfoProps = {
+    title: InputProps;
+    client: InputProps;
+}
 
-export function GeneralInfo() {
+export function GeneralInfo({ title, client }: GeneralInfoProps) {
     return (
         <View style={styles.container}>
-            <Input placeholder="Título" />
-            <Input placeholder="Cliente" />
+            <Input placeholder="Título" {...title} />
+            <Input placeholder="Cliente" {...client} />
         </View>
     )
 }

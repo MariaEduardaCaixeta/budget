@@ -4,8 +4,12 @@ import { BudgetStatus, budgetStatusConfig, BudgetStatusConfig } from "@/enums/Bu
 import { View } from "react-native";
 import { styles } from "./styles";
 
+type StatusProps = {
+    selectedStatus?: BudgetStatus;
+    onStatusChange: (status: BudgetStatus) => void;
+}
 
-export function Status() {
+export function Status({ selectedStatus, onStatusChange }: StatusProps) {
     const entries = Object.entries(budgetStatusConfig) as [string, BudgetStatusConfig][];
     type RadioGroupValue = `${BudgetStatus.APPROVED}` | `${BudgetStatus.REJECTED}` | `${BudgetStatus.DRAFT}` | `${BudgetStatus.SENT}`;
 
@@ -19,8 +23,8 @@ export function Status() {
             <RadioGroup<RadioGroupValue>
                 columns={2}
                 options={statusOptions}
-                selectedValue={`${BudgetStatus.REJECTED}`}
-                onValueChange={(value) => console.log(value)}
+                selectedValue={`${selectedStatus ?? BudgetStatus.DRAFT}`}
+                onValueChange={(value) => onStatusChange && onStatusChange(Number(value))}
             />
         </View>
     )

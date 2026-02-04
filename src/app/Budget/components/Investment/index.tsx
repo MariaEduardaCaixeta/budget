@@ -4,16 +4,33 @@ import { Money } from "@/components/MoneyText";
 import { moneyStyles } from "@/components/MoneyText/styles";
 import { TextInput } from "react-native-gesture-handler";
 import { typography } from "@/theme/typography";
-
-const MIN = 0;
-const MAX = 100;
+import { useEffect, useState } from "react";
 
 type InvestmentProps = TextInputProps & {
     subtotal: number;
     totalItems: number;
+    discount?: string;
 }
 
-export function Investment({ subtotal, totalItems, ...textInputProps }: InvestmentProps) {
+export function Investment({ subtotal, totalItems, discount, ...textInputProps }: InvestmentProps) {
+    const [discountAmount, setDiscountAmount] = useState(0);
+
+    const calculateDiscount = (value: string) => {
+        const discountNum = Number(value);
+        const discountValue = (subtotal * discountNum / 100);
+        setDiscountAmount(discountValue);
+    }
+
+    useEffect(() => {
+        if (subtotal === 0) return;
+
+        if (discount) {
+            calculateDiscount(discount);
+        } else {
+            setDiscountAmount(0);
+        }
+    }, [discount, subtotal]);
+
     return (
         <View>
             <View style={styles.main}>
@@ -24,12 +41,13 @@ export function Investment({ subtotal, totalItems, ...textInputProps }: Investme
                     <View style={styles.rowInline}>
                         <Text style={styles.label}>Desconto</Text>
                         <View style={styles.discountInputContainer}>
-                            <TextInput 
+                            <TextInput
                                 keyboardType="numeric"
                                 maxLength={3}
-                                placeholder="0" 
-                                style={[styles.valueLight, { width: 30 }]} 
-                                {...textInputProps} 
+                                placeholder="0"
+                                value={discount}
+                                style={[styles.valueLight, { width: 30 }]}
+                                {...textInputProps}
                             />
                             <Text style={[typography.titleMd]}>%</Text>
                         </View>
@@ -43,7 +61,11 @@ export function Investment({ subtotal, totalItems, ...textInputProps }: Investme
                         <Money amount={subtotal} />
                     </View>
 
-                    <Money amount={1104} prefix="- " amountStyle={moneyStyles.danger} variant="danger" />
+                    {
+                        discountAmount > 0 && (
+                            <Money amount={discountAmount} prefix="- " amountStyle={moneyStyles.danger} variant="danger" />
+                        )
+                    }
                 </View>
             </View>
 
@@ -51,8 +73,12 @@ export function Investment({ subtotal, totalItems, ...textInputProps }: Investme
                 <Text style={styles.totalLabel}>Valor total</Text>
 
                 <View style={styles.totalAmounts}>
-                    <Money amount={subtotal} strike amountStyle={moneyStyles.light} />
-                    <Money amount={3847.5} amountStyle={[moneyStyles.base, moneyStyles.amountLg]} />
+                    {
+                        discountAmount > 0 && (
+                            <Money amount={subtotal} strike amountStyle={moneyStyles.light} />
+                        )
+                    }
+                    <Money amount={subtotal - discountAmount} amountStyle={[moneyStyles.base, typography.titleLg]} />
                 </View>
             </View>
         </View>
