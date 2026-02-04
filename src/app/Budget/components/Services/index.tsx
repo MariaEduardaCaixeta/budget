@@ -4,7 +4,12 @@ import { colors } from "@/theme/colors"
 import { Button } from "@/components/Button"
 import { styles } from "./styles"
 
-export function Services({ services }: { services?: ServiceRowProps[] }) {
+type ServicesProps = {
+    services?: ServiceRowProps[];
+    onAddService?: () => void;
+}
+
+export function Services({ services, onAddService }: ServicesProps) {
     return (
         <View style={styles.container}>
             {
@@ -23,6 +28,7 @@ export function Services({ services }: { services?: ServiceRowProps[] }) {
                 labelColor={colors.purple.base}
                 iconName="plus"
                 iconColor={colors.purple.base}
+                onPress={onAddService}
             />
         </View>
     )

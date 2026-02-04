@@ -11,21 +11,30 @@ import { GeneralInfo } from "./components/GerneralInfo";
 import { Status } from "./components/Status";
 import { Services } from "./components/Services";
 import { Investment } from "./components/Investment";
-import { useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { BudgetStatus } from "@/enums/BudgetStatus";
 import { ServiceRowProps } from "./components/Services/ServiceRow";
 import { Footer } from "@/components/Footer";
+import { AppBottomSheet } from "@/components/AppBottomSheet";
+import BottomSheet from "@gorhom/bottom-sheet";
+import { Filter } from "react-native-svg";
+import { AddService, AddServiceRef } from "./components/Services/AddService";
 
 const MAX = 100;
 const MIN = 0;
 
 export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
+    const sheetRef = useRef<BottomSheet>(null);
+    const addServiceRef = useRef<AddServiceRef>(null);
+    const snapPoints = useMemo(() => ['55%'], []);
+    
     const [title, setTitle] = useState('')
     const [client, setClient] = useState('')
     const [status, setStatus] = useState(BudgetStatus.DRAFT)
     const [services, setServices] = useState<ServiceRowProps[]>([])
     const [discount, setDiscount] = useState('')
     const [subtotal, setSubtotal] = useState(100)
+    const [newService, setNewService] = useState<ServiceRowProps | null>(null);
 
     const handleDiscountChange = (text: string) => {
         const cleaned = text.replace(/[^0-9]/g, "");
@@ -38,6 +47,28 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
 
         setDiscount(cleaned);
     };
+
+    const handleNewService = (service: ServiceRowProps | null) => {
+        if (service) {
+            console.log('New service added:', service);
+            // setServices((prevServices) => [...prevServices, service]);
+        }
+    }
+
+    const handleAddService = (serviceData: { name: string; description: string; amount: number; quantity: number }) => {
+        console.log('Service submitted:', serviceData);
+        // Aqui você pode adicionar a lógica para salvar o serviço
+        // setServices((prevServices) => [...prevServices, serviceData]);
+        closeServiceSheet();
+    }
+
+    const openServiceSheet = () => {
+        sheetRef.current?.expand();
+    }
+
+    const closeServiceSheet = () => {
+        sheetRef.current?.close();
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
@@ -73,7 +104,10 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                         <BudgetDetailsCard
                             cardLabel="Serviços inclusos"
                             cardContent={
-                                <Services services={services} />
+                                <Services 
+                                    services={services} 
+                                    onAddService={openServiceSheet}
+                                />
                             }
                             iconName="note"
                             iconColor={colors.purple.base}
@@ -102,6 +136,20 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                         secondary={{ label: "Cancelar", labelColor: colors.purple.base, onPress: () => navigation.goBack() }}
                     />
                 </View>
+
+                <AppBottomSheet
+                    sheetRef={sheetRef}
+                    snapPoints={snapPoints}
+                    title="Serviço"
+                    content={<AddService ref={addServiceRef} onSubmit={(value) => handleAddService(value)} />}
+                    footer={
+                        <Footer
+                            primary={{ label: "Salvar", iconName: "check", backgroundColor: colors.purple.base, iconSize: 16, onPress: () => addServiceRef.current?.submit() }}
+                            secondary={{ iconName: "trash", iconColor: colors.danger.base, iconSize: 20, onPress: closeServiceSheet }}
+                        />
+                    }
+                />
+
             </View>
 
         </SafeAreaView>
