@@ -1,3 +1,5 @@
+import { colors } from "@/theme/colors";
+import { spacing } from "@/theme/spacing";
 import { View } from "react-native";
 
 export function Header({ children }: { children: React.ReactNode }) {
@@ -5,10 +7,11 @@ export function Header({ children }: { children: React.ReactNode }) {
         <View style={{ 
             width: '100%',
             flexDirection: 'row',
-            justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: 54,
-            paddingTop: 24,
+            paddingVertical: spacing.xxxs,
+            borderBottomColor: colors.gray[200],
+            borderBottomWidth: 1,
+            marginBottom: spacing.sm
         }}>
             {children}
         </View>

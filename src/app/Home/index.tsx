@@ -38,7 +38,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
 
     return (
         <SafeAreaView
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: '#FFF' }}
         >
             <View style={styles.container}>
                 <View style={styles.headerContainer}>

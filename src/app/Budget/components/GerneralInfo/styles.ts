@@ -2,8 +2,8 @@ import { spacing } from "@/theme/spacing";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-    budgetDetailsContainer: {
-        paddingHorizontal: spacing.lg,
-        gap: spacing.lg,
+    container: {
+        padding: spacing.md,
+        gap: spacing.sm
     }
 });

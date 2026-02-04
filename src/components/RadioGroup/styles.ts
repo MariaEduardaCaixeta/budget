@@ -27,4 +27,15 @@ export const styles = StyleSheet.create({
     optionLabel: {
         color: colors.gray[600]
     }
+    ,
+    columnsWrapper: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+    },
+    column: {
+        flex: 1,
+    },
+    columnSpacing: {
+        paddingRight: spacing.md,
+    }
 })
