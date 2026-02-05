@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { StackRoutesProps } from "@/routes/StackRoutes";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
 import { GeneralInfo } from "./components/GerneralInfo";
@@ -17,6 +17,7 @@ import { Footer } from "@/components/Footer";
 import { AppBottomSheet } from "@/components/AppBottomSheet";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { AddService, ServiceData, AddServiceRef } from "./components/Services/AddService";
+import { BudgetStorage, budgetStorage } from "@/storage/budgetsStorage";
 
 const MAX = 100;
 const MIN = 0;
@@ -32,7 +33,6 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     const [services, setServices] = useState<ServiceData[]>([])
     const [discount, setDiscount] = useState('')
     const [subtotal, setSubtotal] = useState(0)
-    const [totalItems, setTotalItems] = useState(0)
 
     const handleDiscountChange = (text: string) => {
         const cleaned = text.replace(/[^0-9]/g, "");
@@ -48,9 +48,27 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
 
     const handleAddService = (serviceData: ServiceData) => {
         setServices((prevServices) => [...prevServices, serviceData]);
-        setTotalItems((prevTotal) => prevTotal + serviceData.quantity);
         setSubtotal((prevSubtotal) => prevSubtotal + serviceData.amount * serviceData.quantity);
         closeServiceSheet();
+    }
+
+    const handleSaveBudget = () => {
+        const budget: BudgetStorage = {
+            id: Date.now().toString(),
+            title,
+            client,
+            status,
+            services,
+            discount: Number(discount),
+            subtotal,
+        }
+        budgetStorage
+            .add(budget)
+            .then(() => navigation.goBack())
+            .catch((error) => {
+                console.log('Error saving item:', error);
+                Alert.alert('Erro', 'Não foi possível salvar o orçamento.');
+            });
     }
 
     const openServiceSheet = () => {
@@ -109,7 +127,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                             cardContent={
                                 <Investment
                                     subtotal={subtotal}
-                                    totalItems={totalItems}
+                                    totalItems={services.length}
                                     discount={discount}
                                     onChangeText={handleDiscountChange}
                                 />
@@ -123,7 +141,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
 
                 <View style={styles.footerContainer}>
                     <Footer
-                        primary={{ label: "Salvar", iconName: "check", backgroundColor: colors.purple.base, iconSize: 16, onPress: () => { } }}
+                        primary={{ label: "Salvar", iconName: "check", backgroundColor: colors.purple.base, iconSize: 16, onPress: handleSaveBudget }}
                         secondary={{ label: "Cancelar", labelColor: colors.purple.base, onPress: () => navigation.goBack() }}
                     />
                 </View>
