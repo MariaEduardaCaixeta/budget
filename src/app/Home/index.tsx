@@ -7,7 +7,7 @@ import { colors } from "@/theme/colors";
 import { Input } from "@/components/Input";
 import { BudgetCard } from "@/components/BudgetCard";
 import { AppBottomSheet } from "@/components/AppBottomSheet";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { Filter, FilterRef, FilterData } from "@/components/Filter";
 import { Footer } from "@/components/Footer";
@@ -16,18 +16,19 @@ import { budgetStorage, BudgetStorage } from "@/storage/budgetsStorage";
 import { FlatList } from "react-native-gesture-handler";
 import { BudgetStatus } from "@/enums/BudgetStatus";
 import { OrderBy } from "@/enums/OrderBy";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function Home({ navigation }: StackRoutesProps<'home'>) {
     const sheetRef = useRef<BottomSheet>(null);
     const filterRef = useRef<FilterRef>(null);
     const snapPoints = useMemo(() => ['70%'], []);
-    const [loaded, setLoaded] = useState(false);
     const [filters, setFilters] = useState<FilterData | null>(null);
 
     const [budgets, setBudgets] = useState<BudgetStorage[]>([]);
     const [filteredBudgets, setFilteredBudgets] = useState<BudgetStorage[]>([]);
+    const [inputFocused, setInputFocused] = useState(false);
 
-    const fetchBudgets = async () => {
+    const fetchBudgets = () => {
         budgetStorage
             .getAll()
             .then(setBudgets)
@@ -91,12 +92,11 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
 
     const drafts = budgets.filter(budget => budget.status === BudgetStatus.DRAFT).length;
 
-    useEffect(() => {
-        console.log(loaded)
-        if (!loaded) {
-            fetchBudgets().then(() => setLoaded(true));
-        }
-    }, [loaded]);
+    useFocusEffect(
+        useCallback(() => {
+            fetchBudgets();
+        }, [])
+    );
 
     useEffect(() => {
         const filtered = applyFiltersToBudgets(budgets, filters);
@@ -117,7 +117,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
                 </View>
 
                 <View style={styles.searchContainer}>
-                    <Input style={{ flex: 1 }} iconName="search" iconColor={colors.gray[600]} iconSize={20} placeholder="Título ou cliente" />
+                    <Input style={{ flex: 1, borderColor: inputFocused ? colors.purple.base : colors.gray[300] }} iconName="search" iconColor={inputFocused ? colors.purple.base : colors.gray[600]} iconSize={20} placeholder="Título ou cliente" onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} />
                     <Button iconName="filter" onPress={openFilterSheet} iconColor={colors.purple.base} />
                 </View>
 
@@ -132,7 +132,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
                                 status={item.status}
                                 budgetTitle={item.title}
                                 clientName={item.client}
-                                amount={item.subtotal}
+                                amount={item.subtotal - ((item.discount ?? 0) / 100 * item.subtotal)}
                             />
                         </Pressable>
                     )}

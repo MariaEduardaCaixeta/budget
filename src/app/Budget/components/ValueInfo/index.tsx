@@ -7,7 +7,7 @@ import { typography } from "@/theme/typography";
 import { moneyStyles } from "@/components/MoneyText/styles";
 
 type KeyValueRowProps = {
-    label: string;
+    label: React.ReactNode;
     right: React.ReactNode;
     labelStyle?: any;
     style?: any;
@@ -16,13 +16,13 @@ type KeyValueRowProps = {
 function KeyValueRow({ label, right, labelStyle, style }: KeyValueRowProps) {
     return (
         <View style={[styles.row, style]}>
-            <Text
-                numberOfLines={1}
-                ellipsizeMode="tail"
-                style={[styles.label, labelStyle]}
-            >
-                {label}
-            </Text>
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                {typeof label === 'string' ? (
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.label, labelStyle]}>{label}</Text>
+                ) : (
+                    label
+                )}
+            </View>
 
             <View style={styles.right}>
                 {right}
@@ -37,6 +37,8 @@ type ValueInfoProps = {
 }
 
 export function ValueInfo({ subtotal, discount }: ValueInfoProps) {
+    const discountValue = subtotal * (discount / 100);
+
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
@@ -44,27 +46,32 @@ export function ValueInfo({ subtotal, discount }: ValueInfoProps) {
             </View>
 
             <View style={styles.content}>
-                {
-                    discount > 0 && (
-                        <View style={styles.top}>
-                            <KeyValueRow
-                                label="Subtotal"
-                                right={<Money amount={subtotal} tone="light" textStyle={typography.titleXs} strike />}
-                            />
+                {discount > 0 && (
+                    <View style={styles.top}>
+                        <KeyValueRow
+                            label="Subtotal"
+                            right={<Money amount={subtotal} tone="light" textStyle={typography.titleXs} strike />}
+                        />
 
-                            <KeyValueRow
-                                label="Desconto"
-                                right={<Money amount={discount} tone="success" prefix="- " textStyle={typography.titleXs} />}
-                            />
-                        </View>
-                    )
-                }
+                        <KeyValueRow
+                            label={
+                                <>
+                                    <Text style={styles.label}>Desconto</Text>
+                                    <View style={styles.discountTag}>
+                                        <Text style={styles.discountTagText}>{discount}% off</Text>
+                                    </View>
+                                </>
+                            }
+                            right={<Money amount={discountValue} tone="success" prefix="- " textStyle={typography.titleXs} />}
+                        />
+                    </View>
+                )}
 
                 <View style={[styles.row, styles.totalRow]}>
                     <KeyValueRow
                         label="Investimento total"
                         labelStyle={[typography.titleSm, { color: colors.gray[700] }]}
-                        right={<Money amount={subtotal - discount} partsStyle={{ amount: typography.titleLg, currency: typography.textXs }} />}
+                        right={<Money amount={subtotal - discountValue} partsStyle={{ amount: typography.titleLg, currency: typography.textXs }} />}
                     />
                 </View>
             </View>

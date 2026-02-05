@@ -29,17 +29,26 @@ export const styles = StyleSheet.create({
     label: {
         ...typography.textSm,
         color: colors.gray[600],
-        flex: 1,
-        paddingRight: spacing.sm,
+        paddingRight: 0,
     },
     right: {
-        flexShrink: 0,
         alignItems: "flex-end",
     },
     top: {
         borderBottomColor: colors.gray[200],
         borderBottomWidth: 1,
         paddingBottom: spacing.xs,
+    },
+    discountTag: {
+        backgroundColor: colors.success.light,
+        paddingHorizontal: spacing.xxs,
+        paddingVertical: 2,
+        borderRadius: 6,
+        marginLeft: spacing.xs,
+    },
+    discountTagText: {
+        ...typography.titleXs,
+        color: colors.success.dark,
     },
     totalRow: {
         paddingBottom: -spacing.xxxs,

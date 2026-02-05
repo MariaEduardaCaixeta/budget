@@ -4,7 +4,7 @@ import { Header } from "@/components/Header";
 import { StackRoutesProps } from "@/routes/StackRoutes";
 import { colors } from "@/theme/colors";
 import { typography } from "@/theme/typography";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Share, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
 import { GeneralInfo } from "./components/GerneralInfo";
@@ -137,10 +137,12 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
         sheetRef.current?.expand();
     }
 
-    const handleShareBudget = () => {
-        console.log('Compartilhar orçamento');
-    }
-
+    const handleShareBudget = async () => {
+        await Share.share({
+            title: "Orçamento",
+            message: `Segue o orçamento #${budget?.title ?? ''}`,
+        });
+    };
     const handleDuplicateBudget = () => {
         budgetStorage
             .duplicate(id!)
