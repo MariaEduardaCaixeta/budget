@@ -2,9 +2,15 @@ import { Icon } from "@/components/icons";
 import { View, Text } from "react-native";
 import { colors } from "@/theme/colors";
 import { styles } from "./styles";
-import { typography } from "@/theme/typography";
 
-export function DetailInfo() {
+type DetailInfoProps = {
+    budgetTitle: string;
+    budgetClient: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export function DetailInfo({ budgetTitle, budgetClient, createdAt, updatedAt }: DetailInfoProps) {
     return (
         <View style={styles.container}>
             {/* HEADER */}
@@ -18,7 +24,7 @@ export function DetailInfo() {
                 </View>
 
                 <Text style={styles.headerText}>
-                    Detalhes do Orçamento da loja online da vinte e cinco de março
+                    {budgetTitle}
                 </Text>
             </View>
 
@@ -26,16 +32,16 @@ export function DetailInfo() {
             <View style={styles.contentContainer}>
                 <View style={styles.contentInfoColumn}>
                     <Text style={styles.contentInfoTitle}>Cliente</Text>
-                    <Text style={styles.contentInfoText}>Soluções Tecnológicas Beta</Text>
+                    <Text style={styles.contentInfoText}>{budgetClient}</Text>
                 </View>
                 <View style={styles.contentInfoRow}>
                     <View style={styles.contentInfoColumn}>
                         <Text style={styles.contentInfoTitle}>Criado em</Text>
-                        <Text style={styles.contentInfoText}>12 de Setembro de 2024</Text>
+                        <Text style={styles.contentInfoText}>{createdAt}</Text>
                     </View>
                     <View style={styles.contentInfoColumn}>
                         <Text style={styles.contentInfoTitle}>Atualizado em</Text>
-                        <Text style={styles.contentInfoText}>15 de Setembro</Text>
+                        <Text style={styles.contentInfoText}>{updatedAt}</Text>
                     </View>
                 </View>
             </View>

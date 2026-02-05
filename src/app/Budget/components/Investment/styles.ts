@@ -39,7 +39,6 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         borderTopColor: colors.gray[200],
         borderTopWidth: 1,
-        marginTop: spacing.sm,
         alignItems: "center",
         padding: spacing.lg,
         backgroundColor: colors.gray[100],
@@ -66,13 +65,6 @@ export const styles = StyleSheet.create({
         ...typography.textSm,
         color: colors.gray[600],
         marginLeft: spacing.xs,
-    },
-
-    danger: {
-        color: colors.danger.base,
-    },
-    light: {
-        color: colors.gray[600],
     },
     totalAmount: {
         ...typography.titleLg,

@@ -20,7 +20,7 @@ export function Button({ label, backgroundColor, labelColor, hasPadding = true, 
             ]}>
             <View style={[
                 styles.container,
-                hasPadding && { paddingVertical: spacing.sm, paddingHorizontal: spacing.lg },
+                hasPadding && { padding: spacing.sm },
                 backgroundColor && { backgroundColor },
                 !backgroundColor && styles.outlineButton
             ]}>

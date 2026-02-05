@@ -37,7 +37,7 @@ export function ServiceRow(data: ServiceRowProps) {
 
             {/* RIGHT */}
             <View style={styles.right}>
-                <Money amount={data.amount} amountStyle={[moneyStyles.base, typography.titleMd]}/>
+                <Money amount={data.amount} partsStyle={{ amount: typography.titleMd, currency: typography.textXs }}/>
 
                 <Text style={styles.qty}>Qt: {data.quantity}</Text>
             </View>

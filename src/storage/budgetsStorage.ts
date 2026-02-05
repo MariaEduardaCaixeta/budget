@@ -13,6 +13,8 @@ export type BudgetStorage = {
     services: ServiceData[];
     discount: number;
     subtotal: number;
+    createdAt: string;
+    updatedAt?: string;
 }
 
 async function getAll(): Promise<BudgetStorage[]> {
@@ -48,9 +50,22 @@ async function add(budget: BudgetStorage): Promise<void> {
     await save(budgets);
 }
 
+async function update(updatedBudget: BudgetStorage): Promise<void> {
+    const budgets = await getAll();
+    const budgetIndex = budgets.findIndex(budget => budget.id === updatedBudget.id);
+
+    if (budgetIndex === -1) {
+        throw new Error('BUDGETS_UPDATE: Orçamento não encontrado');
+    }
+
+    budgets[budgetIndex] = { ...budgets[budgetIndex], ...updatedBudget, updatedAt: new Date().toLocaleDateString("pt-BR") };
+    await save(budgets);
+}
+
 export const budgetStorage = {
     getAll,
     getById,
     save,
     add,
+    update,
 };

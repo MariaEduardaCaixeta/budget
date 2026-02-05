@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
 import { typography } from "@/theme/typography";
@@ -48,7 +48,7 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
             filtered.sort((a, b) => {
                 switch (filterData.sortBy) {
                     case OrderBy.RECENT:
-                        return new Date(b.id).getTime() - new Date(a.id).getTime(); 
+                        return new Date(b.id).getTime() - new Date(a.id).getTime();
                     case OrderBy.OLDEST:
                         return new Date(a.id).getTime() - new Date(b.id).getTime();
                     case OrderBy.MOST_EXPENSIVE:
@@ -125,12 +125,16 @@ export function Home({ navigation }: StackRoutesProps<'home'>) {
                     data={filteredBudgets}
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <BudgetCard
-                            status={item.status}
-                            budgetTitle={item.title}
-                            clientName={item.client}
-                            amount={item.subtotal}
-                        />
+                        <Pressable onPress={() => navigation.navigate('budget', { id: item.id })} style={({ pressed }) => [
+                            pressed && { opacity: 0.5 }
+                        ]}>
+                            <BudgetCard
+                                status={item.status}
+                                budgetTitle={item.title}
+                                clientName={item.client}
+                                amount={item.subtotal}
+                            />
+                        </Pressable>
                     )}
                     ItemSeparatorComponent={() => <View style={styles.separator} />}
                 />

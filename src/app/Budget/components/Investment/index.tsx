@@ -58,12 +58,12 @@ export function Investment({ subtotal, totalItems, discount, ...textInputProps }
                 <View style={styles.right}>
                     <View style={styles.subtotalRight}>
                         <Text style={styles.meta}>{totalItems} itens</Text>
-                        <Money amount={subtotal} />
+                        <Money amount={subtotal} partsStyle={{ currency: typography.textXs, amount: typography.textSm }}/>
                     </View>
 
                     {
                         discountAmount > 0 && (
-                            <Money amount={discountAmount} prefix="- " amountStyle={moneyStyles.danger} variant="danger" />
+                            <Money amount={discountAmount} prefix="- " partsStyle={{ currency: typography.textXs, amount: typography.textSm }} tone="danger"/>
                         )
                     }
                 </View>
@@ -75,10 +75,10 @@ export function Investment({ subtotal, totalItems, discount, ...textInputProps }
                 <View style={styles.totalAmounts}>
                     {
                         discountAmount > 0 && (
-                            <Money amount={subtotal} strike amountStyle={moneyStyles.light} />
+                            <Money amount={subtotal} strike textStyle={typography.textXs} tone="light"/>
                         )
                     }
-                    <Money amount={subtotal - discountAmount} amountStyle={[moneyStyles.base, typography.titleLg]} />
+                    <Money amount={subtotal - discountAmount} partsStyle={{ currency: typography.textXs, amount: typography.titleLg }} />
                 </View>
             </View>
         </View>

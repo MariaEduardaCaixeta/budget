@@ -11,7 +11,7 @@ type FooterProps = {
 
 export function Footer({ primary, secondary, iconActions }: FooterProps) {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { justifyContent: iconActions ? 'space-between' : 'center' }]}>
             <View style={styles.secondaryButtonContainer}>
                 {
                     secondary &&
