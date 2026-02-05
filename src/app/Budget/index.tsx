@@ -11,13 +11,14 @@ import { GeneralInfo } from "./components/GerneralInfo";
 import { Status } from "./components/Status";
 import { Services } from "./components/Services";
 import { Investment } from "./components/Investment";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { BudgetStatus } from "@/enums/BudgetStatus";
 import { Footer } from "@/components/Footer";
 import { AppBottomSheet } from "@/components/AppBottomSheet";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { AddService, ServiceData, AddServiceRef } from "./components/Services/AddService";
 import { BudgetStorage, budgetStorage } from "@/storage/budgetsStorage";
+import { DetailInfo } from "./components/DetailInfo";
 
 const MAX = 100;
 const MIN = 0;
@@ -26,13 +27,15 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     const sheetRef = useRef<BottomSheet>(null);
     const addServiceRef = useRef<AddServiceRef>(null);
     const snapPoints = useMemo(() => ['55%'], []);
-    
+
     const [title, setTitle] = useState('')
     const [client, setClient] = useState('')
     const [status, setStatus] = useState(BudgetStatus.DRAFT)
     const [services, setServices] = useState<ServiceData[]>([])
     const [discount, setDiscount] = useState('')
     const [subtotal, setSubtotal] = useState(0)
+
+    const [isViewOnly, setIsViewOnly] = useState(false)
 
     const handleDiscountChange = (text: string) => {
         const cleaned = text.replace(/[^0-9]/g, "");
@@ -47,8 +50,14 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     };
 
     const handleAddService = (serviceData: ServiceData) => {
-        setServices((prevServices) => [...prevServices, serviceData]);
-        setSubtotal((prevSubtotal) => prevSubtotal + serviceData.amount * serviceData.quantity);
+        setServices((prevServices) => {
+            const exists = prevServices.find(s => s.id === serviceData.id);
+            if (exists) {
+                return prevServices.map(s => s.id === serviceData.id ? serviceData : s);
+            }
+            return [...prevServices, serviceData];
+        });
+
         closeServiceSheet();
     }
 
@@ -71,6 +80,13 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
             });
     }
 
+    const handleEditService = (serviceId: string) => {
+        const service = services.find(s => s.id === serviceId);
+        if (!service) return;
+        addServiceRef.current?.populateForm(service);
+        sheetRef.current?.expand();
+    }
+
     const openServiceSheet = () => {
         sheetRef.current?.expand();
     }
@@ -78,6 +94,11 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     const closeServiceSheet = () => {
         sheetRef.current?.close();
     }
+
+    useEffect(() => {
+        const total = services.reduce((acc, s) => acc + s.amount * s.quantity, 0);
+        setSubtotal(total);
+    }, [services]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
@@ -113,9 +134,11 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                         <BudgetDetailsCard
                             cardLabel="Serviços inclusos"
                             cardContent={
-                                <Services 
-                                    services={services} 
+                                <Services
+                                    isViewOnly={isViewOnly}
+                                    services={services}
                                     onAddService={openServiceSheet}
+                                    onEditService={(serviceId) => { handleEditService(serviceId) }}
                                 />
                             }
                             iconName="note"
@@ -136,6 +159,8 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                             iconColor={colors.purple.base}
                         />
 
+                        <DetailInfo />
+
                     </View>
                 </ScrollView>
 
@@ -150,7 +175,11 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                     sheetRef={sheetRef}
                     snapPoints={snapPoints}
                     title="Serviço"
-                    content={<AddService ref={addServiceRef} onSubmit={(value) => handleAddService(value)} />}
+                    content={
+                        <AddService
+                            ref={addServiceRef}
+                            onSubmit={(value) => handleAddService(value)}
+                        />}
                     footer={
                         <Footer
                             primary={{ label: "Salvar", iconName: "check", backgroundColor: colors.purple.base, iconSize: 16, onPress: () => addServiceRef.current?.submit() }}

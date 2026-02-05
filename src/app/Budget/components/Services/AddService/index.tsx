@@ -22,6 +22,7 @@ type AddServiceProps = {
 
 export type AddServiceRef = {
     submit: () => void;
+    populateForm: (data: ServiceData) => void;
 }
 
 export const AddService = forwardRef<AddServiceRef, AddServiceProps>(({ onSubmit }, ref) => {
@@ -29,11 +30,12 @@ export const AddService = forwardRef<AddServiceRef, AddServiceProps>(({ onSubmit
     const [description, setDescription] = useState("");
     const [amount, setAmount] = useState(0);
     const [quantity, setQuantity] = useState(1);
+    const [editingId, setEditingId] = useState<string | null>(null);
 
     const handleSubmit = () => {
-        resetForm();
-        const id = Math.random().toString(36).substring(2, 9);
+        const id = editingId ?? Math.random().toString(36).substring(2, 9);
         onSubmit?.({ id, name, description, amount, quantity });
+        resetForm();
     };
 
     const resetForm = () => {
@@ -41,10 +43,18 @@ export const AddService = forwardRef<AddServiceRef, AddServiceProps>(({ onSubmit
         setDescription("");
         setAmount(0);
         setQuantity(1);
+        setEditingId(null);
     }
 
     useImperativeHandle(ref, () => ({
         submit: handleSubmit,
+        populateForm: (data: ServiceData) => {
+            setEditingId(data.id);
+            setName(data.name);
+            setDescription(data.description);
+            setAmount(data.amount);
+            setQuantity(data.quantity);
+        }
     }));
 
     return (

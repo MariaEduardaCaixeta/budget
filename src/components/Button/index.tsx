@@ -2,14 +2,16 @@ import { Pressable, PressableProps, View, Text, TextStyle } from "react-native";
 import { Icon, IconProps } from "../icons";
 import { styles } from "./styles";
 import { typography } from "@/theme/typography";
+import { spacing } from "@/theme/spacing";
 
 export type ButtonProps = PressableProps & Partial<IconProps> & {
     label?: string;
     backgroundColor?: string;
     labelColor?: string;
+    hasPadding?: boolean;
 }
 
-export function Button({ label, backgroundColor, labelColor, ...rest }: ButtonProps) {
+export function Button({ label, backgroundColor, labelColor, hasPadding = true, ...rest }: ButtonProps) {
     return (
         <Pressable
             {...rest}
@@ -18,6 +20,7 @@ export function Button({ label, backgroundColor, labelColor, ...rest }: ButtonPr
             ]}>
             <View style={[
                 styles.container,
+                hasPadding && { paddingVertical: spacing.sm, paddingHorizontal: spacing.lg },
                 backgroundColor && { backgroundColor },
                 !backgroundColor && styles.outlineButton
             ]}>

@@ -6,8 +6,14 @@ import { moneyStyles } from "@/components/MoneyText/styles";
 import { typography } from "@/theme/typography";
 import { colors } from "@/theme/colors";
 import { ServiceData } from "../AddService";
+import { Button } from "@/components/Button";
 
-export function ServiceRow(data: ServiceData) {
+type ServiceRowProps = ServiceData & {
+    onEdit: () => void;
+    isViewOnly: boolean;
+}
+
+export function ServiceRow(data: ServiceRowProps) {
     return (
         <View style={styles.container}>
             {/* LEFT */}
@@ -37,7 +43,18 @@ export function ServiceRow(data: ServiceData) {
             </View>
 
             {/* ICON */}
-            <Icon iconName="edit" iconSize={20} iconColor={colors.purple.base} />
+            {
+                !data.isViewOnly && (
+                    <Button
+                        iconName="edit"
+                        iconSize={20}
+                        iconColor={colors.purple.base}
+                        onPress={data.onEdit}
+                        hasPadding={false}
+                        backgroundColor="transparent"
+                    />
+                )
+            }
         </View>
     );
 }
