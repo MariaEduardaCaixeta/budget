@@ -91,7 +91,10 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     const saveBudget = (budget: BudgetStorage) => {
         budgetStorage
             .add(budget)
-            .then(() => navigation.goBack())
+            .then(() => {
+                Alert.alert('Sucesso', 'Orçamento salvo com sucesso.');
+                navigation.goBack();
+            })
             .catch((error) => {
                 console.log('Error saving item:', error);
                 Alert.alert('Erro', 'Não foi possível salvar o orçamento.');
@@ -101,7 +104,10 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     const updateBudget = (budget: BudgetStorage) => {
         budgetStorage
             .update(budget)
-            .then(() => navigation.goBack())
+            .then(() => {
+                Alert.alert('Sucesso', 'Orçamento atualizado com sucesso.');
+                navigation.goBack()
+            })
             .catch((error) => {
                 console.log('Error updating item:', error);
                 Alert.alert('Erro', 'Não foi possível atualizar o orçamento.');
@@ -120,7 +126,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
             discount: Number(discount),
             subtotal,
         }
-        
+
         id ? updateBudget({ ...budget, id }) : saveBudget(budget);
     }
 
@@ -133,6 +139,38 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
 
     const handleShareBudget = () => {
         console.log('Compartilhar orçamento');
+    }
+
+    const handleDuplicateBudget = () => {
+        budgetStorage
+            .duplicate(id!)
+            .then(() => {
+                Alert.alert('Sucesso', 'Orçamento duplicado com sucesso.');
+                navigation.goBack();
+            })
+            .catch((error) => {
+                console.log('Error duplicating item:', error);
+                Alert.alert('Erro', 'Não foi possível duplicar o orçamento.');
+            });
+    }
+
+    const handleDeleteBudget = () => {
+        Alert.alert('Confirmação', 'Tem certeza que deseja deletar este orçamento?', [
+            { text: 'Cancelar', style: 'cancel' },
+            { text: 'Deletar', style: 'destructive', onPress: () => deleteBudget() }
+        ]);
+    }
+    const deleteBudget = () => {
+        budgetStorage
+            .deleteById(id!)
+            .then(() => {
+                Alert.alert('Sucesso', 'Orçamento deletado com sucesso.');
+                navigation.goBack();
+            })
+            .catch((error) => {
+                console.log('Error deleting item:', error);
+                Alert.alert('Erro', 'Não foi possível deletar o orçamento.');
+            });
     }
 
     const openServiceSheet = () => {
@@ -149,7 +187,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     }, [services]);
 
     useEffect(() => {
-         if (route.params?.id) {
+        if (route.params?.id) {
             setId(route.params.id);
             fetchBudgetById(id!);
         }
@@ -158,9 +196,9 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={{ flex: 1 }}>
-                <Header 
-                    title={`Orçamento ${id ? '#' + id : ''}`} 
-                    onPress={() => navigation.goBack()} 
+                <Header
+                    title={`Orçamento ${id ? '#' + id : ''}`}
+                    onPress={() => navigation.goBack()}
                     children={
                         !isViewOnly ? null : (
                             <StatusTag status={budget?.status || BudgetStatus.DRAFT} />
@@ -172,7 +210,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                     <View style={styles.budgetDetailsContainer}>
                         {
                             isViewOnly ? (
-                                <DetailInfo 
+                                <DetailInfo
                                     budgetTitle={title}
                                     budgetClient={client}
                                     createdAt={budget?.createdAt || ''}
@@ -222,7 +260,7 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
 
                         {
                             isViewOnly ? (
-                                <ValueInfo 
+                                <ValueInfo
                                     subtotal={budget?.subtotal || 0}
                                     discount={budget?.discount || 0}
                                 />
@@ -250,21 +288,21 @@ export function Budget({ navigation, route }: StackRoutesProps<'budget'>) {
                     {
                         isViewOnly ? (
                             <Footer
-                                primary={{ label: "Compartilhar", iconName: "direction", backgroundColor: colors.purple.base, iconSize: 16, onPress: handleShareBudget }} 
+                                primary={{ label: "Compartilhar", iconName: "direction", backgroundColor: colors.purple.base, iconSize: 16, onPress: handleShareBudget }}
                                 iconActions={[
-                                    { iconName: "trash", iconColor: colors.danger.base, iconSize: 20, onPress: handleShareBudget },
-                                    { iconName: "copy", iconColor: colors.purple.base, iconSize: 20, onPress: handleShareBudget },
-                                    { iconName: "edit", iconColor: colors.purple.base, iconSize: 20, onPress: handleShareBudget },
+                                    { iconName: "trash", iconColor: colors.danger.base, iconSize: 20, onPress: handleDeleteBudget },
+                                    { iconName: "copy", iconColor: colors.purple.base, iconSize: 20, onPress: handleDuplicateBudget },
+                                    { iconName: "edit", iconColor: colors.purple.base, iconSize: 20, onPress: () => { setIsViewOnly(false) } },
                                 ]}
                             />
                         ) : (
-                            <Footer 
-                                primary={{ label: "Salvar", iconName: "check", backgroundColor: colors.purple.base, iconSize: 16, onPress: handleBudget }} 
+                            <Footer
+                                primary={{ label: "Salvar", iconName: "check", backgroundColor: colors.purple.base, iconSize: 16, onPress: handleBudget }}
                                 secondary={{ label: "Cancelar", labelColor: colors.purple.base, onPress: () => navigation.goBack() }}
                             />
                         )
                     }
-                    
+
                 </View>
 
                 <AppBottomSheet

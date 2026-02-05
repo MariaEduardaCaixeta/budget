@@ -62,10 +62,37 @@ async function update(updatedBudget: BudgetStorage): Promise<void> {
     await save(budgets);
 }
 
+async function duplicate(id: string): Promise<void> {
+    const budgets = await getAll();
+    const budgetToDuplicate = budgets.find(budget => budget.id === id);
+
+    if (!budgetToDuplicate) {
+        throw new Error('BUDGETS_DUPLICATE: Orçamento não encontrado');
+    }
+    
+    const duplicatedBudget = {
+        ...budgetToDuplicate,
+        id: Math.random().toString(36).substring(2, 9),
+        createdAt: new Date().toLocaleDateString("pt-BR"),
+        updatedAt: undefined,
+    };
+
+    budgets.push(duplicatedBudget);
+    await save(budgets);
+}
+
+async function deleteById(id: string): Promise<void> {
+    const budgets = await getAll();
+    const filteredBudgets = budgets.filter(budget => budget.id !== id);
+    await save(filteredBudgets);
+}
+
 export const budgetStorage = {
     getAll,
     getById,
     save,
     add,
     update,
+    duplicate,
+    deleteById,
 };
